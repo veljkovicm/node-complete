@@ -6,4 +6,3 @@ const sequelize = new Sequelize('<DB_NAME>', '<USERNAME>', '<PASSWORD>', {
 });
 
 module.exports = sequelize;
-

@@ -46,13 +46,14 @@ form {
 }
 
 .main-header__item {
-  margin: 0 1rem;
+  margin: 0;
   padding: 0;
 }
 
 .main-header__item a {
   text-decoration: none;
   color: white;
+  padding: 15px;
 }
 
 .main-header__item a:hover,

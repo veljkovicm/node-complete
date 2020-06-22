@@ -21,7 +21,7 @@ class Product {
     }
     return dbOp
       .then(result => {
-        console.log(result)
+        // console.log(result)
       })
       .catch(err => console.log(err));
   };
@@ -49,6 +49,15 @@ class Product {
         console.log(product);
         return product;
       })
+      .catch(err => console.log(err));
+  }
+
+  static deleteById(prodId) {
+    const db = getDb();
+    return db
+      .collection('products')
+      .deleteOne({_id: new mongodb.ObjectId(prodId)})
+      .then(res => console.log('DELETED!'))
       .catch(err => console.log(err));
   }
 }

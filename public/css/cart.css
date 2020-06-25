@@ -32,3 +32,16 @@
   margin: 0;
 }
 
+.cart__item > h2 {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.cart__item > h1 a {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 230px;
+}

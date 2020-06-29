@@ -21,13 +21,27 @@ exports.getSignup = (req, res, next) => {
 
 exports.postLogin = (req, res, next) => {
   // res.setHeader('Set-Cookie', 'loggedIn=true');
-  User.findById('5ef49d7cb4e7103514782b65')
+  const { email, password } = req.body;
+  User.findOne({ email })
   .then(user => {
-    req.session.isLoggedIn = true;
-    req.session.user = user;
-    req.session.save((err) => {
-      console.log(err);
-      res.redirect('/');
+    if (!user) {
+      return res.redirect('/login');
+    }
+    bcrypt.compare(password, user.password)
+    .then(doMatch => {
+      if (doMatch) {
+        req.session.isLoggedIn = true;
+        req.session.user = user;
+        return req.session.save((err) => {
+          console.log(err);
+          res.redirect('/');
+        });
+      }
+      res.redirect('login');
+    })
+    .catch(err => { // This will only be executed is something goes wrong, NOT IF PASSWORDS DON'T MATCH
+      console.log(err)
+      res.redirect('/login');
     });
   })
   .catch(err => console.log(err));
@@ -58,7 +72,6 @@ exports.postSignup = (req, res, next) => {
         res.redirect('/login');
       })
   })
-  
   .catch(err => console.log(err));
 };
 

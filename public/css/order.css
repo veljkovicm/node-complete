@@ -27,3 +27,8 @@
     border: 1px solid #00695c;
     color: #00695c;
 }
+
+.orders__products-item a {
+  color: #00695c;
+  text-decoration: none;
+}

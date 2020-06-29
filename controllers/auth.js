@@ -15,6 +15,7 @@ exports.getSignup = (req, res, next) => {
   res.render('auth/signup', {
     path: '/signup',
     pageTitle: 'Signup',
+    errorMessage: req.flash('error'),
   });
 };
 
@@ -24,7 +25,7 @@ exports.postLogin = (req, res, next) => {
   User.findOne({ email })
   .then(user => {
     if (!user) {
-      req.flash('error', 'Invalid email or password.');
+      req.flash('error', 'User with that email does not exist!');
       return res.redirect('/login');
     }
     bcrypt.compare(password, user.password)
@@ -37,6 +38,7 @@ exports.postLogin = (req, res, next) => {
           res.redirect('/');
         });
       }
+      req.flash('error', 'Invalid password.');
       res.redirect('login');
     })
     .catch(err => { // This will only be executed is something goes wrong, NOT IF PASSWORDS DON'T MATCH
@@ -56,6 +58,7 @@ exports.postSignup = (req, res, next) => {
   User.findOne({ email: email })
   .then(userDoc => {
     if (userDoc) {
+      req.flash('error', 'E-Mail exists already!');
       return res.redirect('/signup');
     }
     return bcrypt

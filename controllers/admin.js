@@ -5,7 +5,6 @@ exports.getAddProduct = (req, res, next) => { // ommit next if not using
     pageTitle: 'Add Product',
     path: '/admin/add-product',
     editing: false,
-    isAuthenticated: req.session.isLoggedIn, // or req.session.user
   });
 }
 
@@ -49,7 +48,6 @@ exports.getEditProduct = (req, res, next) => { // ommit next if not using
         path: '/admin/edit-product',
         editing: editMode,
         product: product,
-        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch(err => console.log(err));
@@ -100,7 +98,6 @@ exports.getProducts = (req, res, next) => {
         prods: products,
         pageTitle: 'Admin products',
         path: '/admin/products',
-        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch(err => console.log(err));

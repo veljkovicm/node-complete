@@ -3,12 +3,14 @@ const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 const sendgridTransport = require('nodemailer-sendgrid-transport');
+const sendGridKey = require('../util/send-grid-key');
+console.log('key: ', sendGridKey);
 
 const User = require('../models/user');
 
 const transporter = nodemailer.createTransport(sendgridTransport({
   auth: {
-    api_key: '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',
+    api_key: '',
   }
 }));
 

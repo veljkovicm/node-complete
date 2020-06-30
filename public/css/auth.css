@@ -1,6 +1,12 @@
-.login-form {
+.login-form-wrapper {
   width: 20rem;
   max-width: 90%;
   margin: auto;
   display: block;
+}
+
+.reset-password__link {
+  float: right;
+  color: #00695c;
+  margin-top: 5px;
 }

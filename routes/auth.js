@@ -12,10 +12,12 @@ router.post(
   [
     check('email')
       .isEmail()
-      .withMessage('Please enter a valid email'),
+      .withMessage('Please enter a valid email')
+      .normalizeEmail(),
     body('password', 'Password must be between 5 and 15 characters long!')
       .isLength({ min: 2, max: 15})
       .isAlphanumeric()
+      .trim()
   ], 
   authController.postLogin
 );
@@ -38,11 +40,13 @@ router.post(
               return Promise.reject('E-Mail exists already');
             }
           });
-        }),
+      })
+      .normalizeEmail(),
     body('password', 'Invalid password')
       .isLength({ min: 2, max: 15 })
-      .isAlphanumeric(),
-    body('confirmPassword').custom((value, { req }) => {
+      .isAlphanumeric()
+      .trim(),
+    body('confirmPassword').trim().custom((value, { req }) => {
       if (value !== req.body.password) {
         throw new Error('Passwords have to match!');
       }

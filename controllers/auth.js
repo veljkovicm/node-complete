@@ -20,6 +20,11 @@ exports.getLogin = (req, res, next) => {
     path: '/login',
     pageTitle: 'Login',
     errorMessage: req.flash('error'),
+    oldInput: {
+      email: '',
+      password: '',
+    },
+    validationErrors: [],
   });
 };
 
@@ -43,17 +48,30 @@ exports.postLogin = (req, res, next) => {
 
   const errors = validationResult(req);
   if(!errors.isEmpty()) {
-    res.status(422).render('auth/login', {
+    return res.status(422).render('auth/login', {
       path: '/login',
       pageTitle: 'Login',
       errorMessage: errors.array()[0].msg,
+      oldInput: {
+        email: email,
+        password: password,
+      },
+      validationErrors: errors.array(),
     });
   }
   User.findOne({ email })
   .then(user => {
     if (!user) {
-      req.flash('error', 'User with that email does not exist!');
-      return res.redirect('/login');
+      return res.status(422).render('auth/login', {
+        path: '/login',
+        pageTitle: 'Login',
+        errorMessage: 'Invalid email or password1',
+        oldInput: {
+          email: email,
+          password: password,
+        },
+        validationErrors: []
+      });
     }
     bcrypt.compare(password, user.password)
     .then(doMatch => {
@@ -65,8 +83,16 @@ exports.postLogin = (req, res, next) => {
           res.redirect('/');
         });
       }
-      req.flash('error', 'Invalid password.');
-      res.redirect('login');
+      return res.status(422).render('auth/login', {
+        path: '/login',
+        pageTitle: 'Login',
+        errorMessage: 'Invalid email or password2',
+        oldInput: {
+          email: email,
+          password: password,
+        },
+        validationErrors: []
+      });
     })
     .catch(err => { // This will only be executed is something goes wrong, NOT IF PASSWORDS DON'T MATCH
       console.log(err)

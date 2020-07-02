@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 const { validationResult } =require('express-validator/check');
 
 const Product = require('../models/product');
@@ -19,10 +21,8 @@ exports.postAddProduct = (req, res, next) => {
     description,
     price
   } = req.body;
-  const { image } = req.file;
-  const errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
+  const image = req.file;
+  if (!image) {
     return res.status(422).render('admin/edit-product', {
       pageTitle: 'Add Product',
       path: '/admin/edit-product',
@@ -30,7 +30,26 @@ exports.postAddProduct = (req, res, next) => {
       hasError: true,
       product: {
         title: title,
-        image: image,
+        price: price,
+        description: description
+      },
+      errorMessage: 'Attached file is not an image.',
+      validationErrors: [],
+    }); 
+  }
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    if (req.file.path) {
+      fs.unlink(req.file.path, err => console.log(err));
+    }
+    return res.status(422).render('admin/edit-product', {
+      pageTitle: 'Add Product',
+      path: '/admin/edit-product',
+      editing: false,
+      hasError: true,
+      product: {
+        title: title,
         price: price,
         description: description
       },
@@ -39,11 +58,13 @@ exports.postAddProduct = (req, res, next) => {
     });
   }
 
+  const imageUrl = image.path;
+
   const product = new Product({
     title: title,
     price: price,
     description: description,
-    image: image,
+    imageUrl: imageUrl,
     userId: req.user // Mongoose will pick the ID from the user object
   });
   product

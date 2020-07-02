@@ -25,7 +25,7 @@ router.post(
       .trim(),
     body('price').isFloat(), // has decimal places
     body('description')
-    .isLength({ min: 10, max: 200 })
+    .isLength({ min: 5, max: 200 })
     .trim(),
   ],
   isAuth,

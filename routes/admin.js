@@ -23,7 +23,6 @@ router.post(
       .isString()
       .isLength({ min: 3})
       .trim(),
-    body('imageUrl').isURL(),
     body('price').isFloat(), // has decimal places
     body('description')
     .isLength({ min: 10, max: 200 })
@@ -42,7 +41,6 @@ router.post(
       .isString()
       .isLength({ min: 3})
       .trim(),
-    body('imageUrl').isURL(),
     body('price').isFloat(), // has decimal places
     body('description')
     .isLength({ min: 10, max: 200 })

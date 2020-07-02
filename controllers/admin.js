@@ -16,10 +16,10 @@ exports.getAddProduct = (req, res, next) => { // ommit next if not using
 exports.postAddProduct = (req, res, next) => {
   const {
     title,
-    imageUrl,
     description,
     price
   } = req.body;
+  const { image } = req.file;
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -30,7 +30,7 @@ exports.postAddProduct = (req, res, next) => {
       hasError: true,
       product: {
         title: title,
-        imageUrl: imageUrl,
+        image: image,
         price: price,
         description: description
       },
@@ -43,7 +43,7 @@ exports.postAddProduct = (req, res, next) => {
     title: title,
     price: price,
     description: description,
-    imageUrl: imageUrl,
+    image: image,
     userId: req.user // Mongoose will pick the ID from the user object
   });
   product

@@ -26,9 +26,20 @@
     padding: 0.5rem;
     border: 1px solid #00695c;
     color: #00695c;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .orders__products-item a {
   color: #00695c;
   text-decoration: none;
+}
+
+.invoice-link {
+  background: url('../images/pdf-download.png');
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  background-size: cover;
 }

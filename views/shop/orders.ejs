@@ -19,6 +19,8 @@
                         <a href="/products/<%= p.product._id %>">
                           <%= p.product.title %> (<%= p.quantity %>)
                         </a>
+                        -
+                        <a href="/orders/<%= order._id %>" class="invoice-link"></a>
                       </li>
                     </li>
                     <% }); %>

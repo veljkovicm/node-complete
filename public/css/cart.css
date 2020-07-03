@@ -38,6 +38,11 @@
   transform: translateX(-50%);
 }
 
+.checkout-list .cart__item > h2 {
+  position: static;
+  transform: none;
+}
+
 .cart__item > h1 a {
   display: block;
   white-space: nowrap;

@@ -3,14 +3,14 @@ const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 const sendgridTransport = require('nodemailer-sendgrid-transport');
-const sendGridConfig = require('../util/send-grid-config');
+const config = require('../config/config');
 const { validationResult } = require('express-validator/check');
 
 const User = require('../models/user');
 
 const transporter = nodemailer.createTransport(sendgridTransport({
   auth: {
-    api_key: sendGridConfig.key,
+    api_key: config.sendGridKey,
   }
 }));
 
@@ -141,7 +141,7 @@ exports.postSignup = (req, res, next) => {
     res.redirect('/login');
     return transporter.sendMail({
       to: email,
-      from: sendGridConfig.email,
+      from: config.sendGridEmail,
       subject: 'Signup succeeded',
       html: '<h1>You successfully signed up</h1>',
     });
@@ -189,7 +189,7 @@ exports.postReset = (req, res, next) => {
     .then(result => {
       transporter.sendMail({
         to: req.body.email,
-        from: sendGridConfig.email,
+        from: config.sendGridEmail,
         subject: 'Password reset',
         html: `
         <p>You requested a password reset</p>

@@ -1,8 +1,0 @@
-{
-  "env": {
-    "sendGridKey": "",
-    "sendGridEmail": "",
-    "stripePrivateKey": "",
-    "MONGODB_URI": ""
-  }
-}

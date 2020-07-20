@@ -3,7 +3,7 @@ const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 const sendgridTransport = require('nodemailer-sendgrid-transport');
-const config = require('../config/config');
+// const config = require('../config/config');
 const { validationResult } = require('express-validator');
 
 const User = require('../models/user');

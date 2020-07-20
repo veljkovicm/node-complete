@@ -1,7 +1,7 @@
 const config = require('../config/config');
 const fs = require('fs');
 const path = require('path');
-const stripe = require('stripe')(config.stripePrivateKey);
+const stripe = require('stripe')(process.env.stripePrivateKey);
 
 const PDFDocument = require('pdfkit');
 
